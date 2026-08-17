@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Cairo / Scarb build output
+target/
+.snfoundry_cache/
+
+# Next.js build output
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Logs / OS
+*.log
+.DS_Store
