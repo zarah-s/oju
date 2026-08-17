@@ -1,0 +1,5 @@
+# Workspaces format themselves; the root config covers repo-level docs and config only.
+node_modules/
+frontend/
+contracts/
+package-lock.json

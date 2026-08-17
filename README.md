@@ -38,13 +38,13 @@ winnings stay private, while the market's odds and resolution stay public and pr
 
 ## 🗂️ Market catalog
 
-| Category | Examples |
-| --- | --- |
-| Economy | Inflation above X%? Naira past ₦X/$? Petrol at ₦Y/litre? |
-| Policy | Border reopening, subsidy decisions |
-| Resources | Oil and minerals, production and benchmarks |
-| Culture | Influencer questions, viral trends, BBNaija |
-| Sports | Match and season outcomes |
+| Category  | Examples                                                 |
+| --------- | -------------------------------------------------------- |
+| Economy   | Inflation above X%? Naira past ₦X/$? Petrol at ₦Y/litre? |
+| Policy    | Border reopening, subsidy decisions                      |
+| Resources | Oil and minerals, production and benchmarks              |
+| Culture   | Influencer questions, viral trends, BBNaija              |
+| Sports    | Match and season outcomes                                |
 
 Markets are naira-denominated where relevant and settled in native USDC on Starknet.
 
@@ -54,6 +54,26 @@ Public: markets, pool totals and odds, each position's amount and side (never it
 payout amounts (never their owners). Hidden: who took any position, who claimed any payout, balances inside the
 privacy pool, the link between a person and their positions. The full honest leakage model and mitigations are
 documented in [docs/design-research-decisions.md](./docs/design-research-decisions.md).
+
+## 🤝 How Oju compares
+
+We have real respect for the teams that built this category, and we are deliberately different from each of
+them:
+
+- **Polymarket** proved that on-chain prediction markets work at global scale, and it is excellent at global
+  questions. Its architecture is fully transparent by design, every position is public, and its Nigeria coverage
+  is thin. Oju goes deep where it goes wide: a Nigeria-native catalog, naira-denominated framing, and privacy at
+  the protocol layer.
+- **Kalshi** legitimized event contracts inside a regulated exchange framework, a genuinely hard achievement.
+  It is built for the US market and full participant visibility to the operator. Oju serves questions and
+  participants that model cannot reach, with privacy as the default.
+- **Luno x Limitless and local movers like Bayse** are bringing prediction products to Nigerian users, which
+  validates the market we all see. They are custodial or transparent by design. Oju is non-custodial and
+  private, which we believe the Nigerian context specifically demands.
+
+In short: the pioneers proved the category; the local movers proved the appetite. Oju is the first to combine
+**Nigeria-native market depth** with **privacy by architecture**, something none of them are structurally
+positioned to offer.
 
 ## 📚 Documentation
 

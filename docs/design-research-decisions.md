@@ -14,6 +14,7 @@ _Uncommitted working doc. All key claims verified against primary sources (contr
 
 **GO.** The full private position → resolve → private claim cycle is feasible on Starknet mainnet in the window, via
 the Wallet API path. Proof points:
+
 - Pool integration is **permissionless**: `InvokeExternal` validates only a non-zero target address; execution is
   a raw `call_contract_syscall`; official anonymizers have empty constructors and no registration. Only gate is
   an opt-out depositor blocklist (default: not blocked).
@@ -30,13 +31,18 @@ the Wallet API path. Proof points:
 One singleton **`PariMarket`** contract (multi-market registry) + resolver seam. No factory, no outcome tokens
 in v1 (outcome-token positions are v2).
 
-**Mechanism: parimutuel** (binary YES/NO). Fee on the losing pool only, so winners never receive less than
-stake. `payout = s + s * distributable / pool[W]` with u256 intermediates, floor division, `max_pool ≤ 2^127`.
-Edge cases: empty winning side → Void + universal refund; empty losing side → stake refund, no fee; dust +
-unclaimed swept by owner after a claim window; position-after-close and resolve-before-close revert. Rejected
-alternatives: CLOB (needs an off-chain matcher, Polymarket-style), AMM/LMSR (fixed-point exp/ln risk, house
-subsidy). Parimutuel is what Zeitgeist/Hxro ship, pure integer math, zero house liability, and its "amount →
-side" shape matches the anonymizer call exactly.
+**Mechanism: N-outcome parimutuel** (binary is the 2-outcome special case). Each market defines its outcome
+buckets at creation: YES/NO, number ranges (naira bands), date ranges, categories. Stakes pool per bucket; the
+winning bucket splits all other pools pro-rata: `distributable = total − pool[W] − fee`,
+`payout = s + s * distributable / pool[W]`, fee taken from losing pools only so winners never receive less than
+stake. u256 intermediates, floor division, `max_pool ≤ 2^127`. Edge cases: empty winning bucket → Void +
+universal refund; no losing stake → refund, no fee; dust + unclaimed swept by owner after a claim window;
+position-after-close and resolve-before-close revert. An **operator role seam** is designed in from day one:
+market creation is curated (owner/multisig) for MVP, and v2 stake-to-operate (bonded, slashable operators
+creating pools permissionlessly) bolts onto the same role. Rejected alternatives: CLOB (needs an off-chain
+matcher, Polymarket-style), AMM/LMSR (fixed-point exp/ln risk, house subsidy). Parimutuel is what
+Zeitgeist/Hxro ship, pure integer math, zero house liability, and its "amount → bucket" shape matches the
+anonymizer call exactly.
 
 **Private position (one proven wallet tx):**
 `[{withdraw → market, amount}, {invoke, market, calldata: [Predict{market_id, side, amount}, commitment, "${poolAddress}"]}]`
@@ -85,15 +91,15 @@ open note created in a tx must be filled by the invoke, none extra; no reentry i
 
 ## Leak inventory (goes in the judged README)
 
-| Leak | Mitigation |
-|---|---|
-| Stake amount visible at execution (inherent to STRK20 invoke) | Fixed stake denominations → k-anonymity |
-| Payout arithmetic fingerprints stake | Same fixed denominations |
-| Deposit-then-position timing correlation | Dwell-time guidance, batching windows |
-| Claim timing shrinks the crowd | Long claim window + jitter nudges |
-| Fee-payer address on `apply_actions` | Relayer submission (any address may submit) |
-| Thin markets self-identify | Seed both sides at creation, warn users |
-| Commitment reuse links positions | Fresh secret per position, enforced unused |
+| Leak                                                          | Mitigation                                  |
+| ------------------------------------------------------------- | ------------------------------------------- |
+| Stake amount visible at execution (inherent to STRK20 invoke) | Fixed stake denominations → k-anonymity     |
+| Payout arithmetic fingerprints stake                          | Same fixed denominations                    |
+| Deposit-then-position timing correlation                      | Dwell-time guidance, batching windows       |
+| Claim timing shrinks the crowd                                | Long claim window + jitter nudges           |
+| Fee-payer address on `apply_actions`                          | Relayer submission (any address may submit) |
+| Thin markets self-identify                                    | Seed both sides at creation, warn users     |
+| Commitment reuse links positions                              | Fresh secret per position, enforced unused  |
 
 Honest statement: position↔claim linkage is largely inherent to parimutuel accounting (payout is computable from
 stake). We hide identities, not amounts. Never overclaim (costs integration-depth points).
@@ -102,7 +108,7 @@ stake). We hide identities, not amounts. Never overclaim (costs integration-dept
 
 - `starkware-libs/starknet-privacy`: `packages/ekubo_swap_anonymizer/` (minimal privacy_invoke shape, 163
   lines), `packages/shadow_account_anonymizer/` (commitment patterns), `packages/privacy/src/{actions,objects,
-  interface,privacy,hashes}.cairo`, `e2e/tests/devnet/*` (SDK recipes + dockerized devnet harness),
+interface,privacy,hashes}.cairo`, `e2e/tests/devnet/*` (SDK recipes + dockerized devnet harness),
   `client/src/builder.ts`.
 - `Akashneelesh/strk20-starter-kit`: wallet wiring (`WalletAccountV6Tag.tsx`), echo helper Cairo + mainnet
   address in `cairo/address.md`, Next.js 16 scaffold.

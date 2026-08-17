@@ -9,6 +9,7 @@ built on Nigerian specifics, open to the world**. The odds are public but the pa
 
 People take **positions** (not "bets", we are a forecasting product) on questions Nigeria already argues about
 daily:
+
 - **Economy:** will inflation pass X%? Will the naira cross ₦X/$? Will petrol hit ₦Y/litre?
 - **Policy:** will the border reopen by date X? Will the subsidy decision land this quarter?
 - **Resources:** oil and minerals, production and benchmark questions.
@@ -34,10 +35,17 @@ controls.
 
 ## 3. How a market works (parimutuel, no jargon)
 
-Two buckets per question: YES and NO. Everyone's stake goes into their chosen bucket. When the question
-resolves, the losing bucket (minus a small fee) is shared among the correct predictors in proportion to their
-stakes. Bigger stake, bigger share. The implied probability at any moment is simply the ratio of the buckets,
-public for everyone to see. No order book, no market maker, no house taking a side.
+Every question has **outcome buckets** defined when the market is created: a simple YES/NO, a set of number
+ranges ("naira ends the month at 1,400 to 1,500 / 1,500 to 1,600 / above 1,600"), a set of date ranges
+("border reopens before September / September to October / later"), or categories. Everyone's stake goes into
+their chosen bucket. When the question resolves, the winning bucket shares everyone else's pools (minus a small
+fee) in proportion to stakes. Bigger stake, bigger share. The implied probability of each bucket at any moment
+is simply its share of the total, public for everyone to see. No order book, no market maker, no house taking a
+side.
+
+Market creation is curated for the MVP. The v2 vision is **stake-to-operate**: anyone stakes to become an
+operator, operators create pools around what's happening or about to trend, earn a share of fees, and have
+their stake at risk for bad questions or resolutions. Decentralized infra, open for everyone to run.
 
 ## 4. The privacy flow, step by step
 

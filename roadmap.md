@@ -39,11 +39,14 @@ tight. Design, research, and positioning docs live in [`docs/`](./docs/).
 
 ## M2: Parimutuel market core (Cairo) `[core]`
 
-- [ ] `PariMarket` singleton: market registry, YES/NO pools, close time, fee (losing pool only), max-pool cap
-- [ ] Payout math with u256 intermediates; floor division; winners never below stake
-- [ ] Edge cases: empty winning side → Void + refund, empty losing side → refund-fee-free, position-after-close
+- [ ] `PariMarket` singleton: market registry, **N-outcome buckets** defined at creation (binary, number ranges,
+      date ranges, categories), close time, fee (losing pools only), max-pool cap
+- [ ] Payout math with u256 intermediates; floor division; winners never below stake; distributable equals the
+      total minus the winning pool minus the fee
+- [ ] Operator role seam (curated creation for MVP; stake-to-operate lands in v2)
+- [ ] Edge cases: empty winning bucket → Void + refund, no losing stake → refund-fee-free, position-after-close
       revert, resolve-before-close revert, dust sweep after claim window
-- [ ] snforge suite incl. property/fuzz tests (Σ payouts ≤ pool + distributable)
+- [ ] snforge suite incl. property/fuzz tests (Σ payouts ≤ total pool; winner never below stake)
 - [ ] PR → CI green → merge
 
 ## M3: Privacy surface `[core]`
@@ -120,8 +123,10 @@ tight. Design, research, and positioning docs live in [`docs/`](./docs/).
 behind the scenes, settlement choice of USDC, USDT (when STRK20-shieldable), or naira. Includes the
 licensing/KYC compliance workstream.
 
-**Track B: progressive decentralization.** Permissionless market creation, bonded optimistic resolution
-replacing the multisig, open indexer/keeper infrastructure, decentralized backend behind the pools.
+**Track B: progressive decentralization (stake-to-operate).** Anyone stakes to become an operator: operators
+create pools around live events and trends, earn a share of fees, and have their stake slashable for bad
+questions or resolutions. Bonded optimistic resolution replaces the multisig; open indexer/keeper
+infrastructure; a decentralized backend behind the pools, open for everyone to run.
 
 **Track C: market depth.** The full Nigeria-native catalog: inflation and fuel (NBS methodology), border and
 policy events (official gazettes/announcements), resources and minerals (oil benchmarks, NNPC/OPEC data),
