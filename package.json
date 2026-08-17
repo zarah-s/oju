@@ -1,0 +1,23 @@
+{
+  "name": "oju",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "description": "Privacy-first prediction markets built on Nigerian specifics, open to the world, on Starknet STRK20",
+  "engines": {
+    "node": ">=20"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "build:frontend": "npm run build -w @oju/frontend",
+    "lint:frontend": "npm run lint -w @oju/frontend",
+    "typecheck:frontend": "npm run typecheck -w @oju/frontend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3.8.3"
+  }
+}
