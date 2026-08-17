@@ -21,13 +21,13 @@ tight. Design, research, and positioning docs live in [`docs/`](./docs/).
 
 ## M0: Scaffold, CI & hackathon registration `[core]`
 
-- [ ] Monorepo: `contracts/` (Scarb 2.20+, Starknet Foundry snforge, OZ cairo-contracts v3) + `frontend/`
+- [x] Monorepo: `contracts/` (Scarb 2.20+, Starknet Foundry snforge, OZ cairo-contracts v3) + `frontend/`
       (Next.js 16, React 19, starknet.js 10, get-starknet, Ready wallet)
-- [ ] Tooling: scarb fmt, snforge, eslint, prettier; GitHub Actions CI (contracts build + test + fmt, frontend
+- [x] Tooling: scarb fmt, snforge, eslint, prettier; GitHub Actions CI (contracts build + test + fmt, frontend
       build + lint + typecheck, repo format) green on a trivial contract
-- [x] Public repo + MIT license + README (public is a hackathon requirement)
+- [x] Public repo + MIT license + README (public is a hackathon requirement; repo private until registration)
 - [ ] Register: PR appending our entry to the hackathon `registry.json` (repo_url + telegram handles)
-- [ ] PR → CI green → merge
+- [x] PR → CI green → merge
 
 ## M1: Mainnet pipeline spike `[core]`
 
